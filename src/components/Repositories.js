@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import BowerList from "./BowerList";
 
 class Repositories extends Component {
     constructor(props) {
@@ -33,17 +34,16 @@ class Repositories extends Component {
                 return response.json();
             })
             .then(data =>{
-                self.setState({repositories: data.values});
+                self.setState({
+                    repositories: data.values,
+                    error: {error:{message:''}}
+                });
             }).catch((error) => {
                 console.log(error);
             });
     }
 
     render() {
-        const repositoriesElement = this.state.repositories.map(function(repository, i){
-            return (<li key={i}>{repository.name}</li>)
-        });
-
         if(this.state.error)  {
             let error = <h1>{this.state.error.error}</h1>
         }
@@ -51,9 +51,7 @@ class Repositories extends Component {
         return (
             <div>
                 <input className="form-control" type="text" placeholder="Type the name of your repository" value={this.state.userName} onChange={this.handleChange} onKeyPress={(e) => this.handleKeyPress(this, e)}/>
-                <ul>
-                    {repositoriesElement}
-                </ul>
+                <BowerList repositories={this.state.repositories}></BowerList>
                 <h1 className="text-danger">{this.state.error.message}</h1>
             </div>
         );

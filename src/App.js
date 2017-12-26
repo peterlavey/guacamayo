@@ -12,7 +12,7 @@ class App extends Component {
           repositories: []
         };
     }
-
+    //todo: Quitar atributo repositories del componente
     render() {
         return (
             <div className="App">
