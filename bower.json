@@ -1,0 +1,22 @@
+{
+  "name": "guacamayo",
+  "description": "Find in which repositories your bower project is being used",
+  "main": "",
+  "authors": [
+    "Pedro Cisternas <pedrocisternasd@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "reactjs",
+    "github",
+    "bitbucket"
+  ],
+  "homepage": "https://github.com/peterlavey/guacamayo",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

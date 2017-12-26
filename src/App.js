@@ -9,7 +9,7 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-          repositories: ["a", "b"]
+          repositories: []
         };
     }
 
@@ -21,7 +21,6 @@ class App extends Component {
                     <h1 className="App-title">Welcome to Guacamayo</h1>
                     </header>
                 <Repositories repositories={this.state.repositories}></Repositories>
-                {this.state.repositories}
             </div>
         );
     }
