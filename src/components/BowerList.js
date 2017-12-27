@@ -6,36 +6,57 @@ class BowerList extends Component {
         this.props = props;
     }
 
+
+    /*componentDidUpdate(prevProps, prevState) {
+        console.log('componentDidUpdate');
+    }
+
+    componentWillUpdate(nextProps, nextState) {
+        console.log('componentWillUpdate');
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log('componentWillReceiveProps');
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log('shouldComponentUpdate');
+    }*/
+
     filterByBowerProjects(repository) {
-        fetch(`https://api.bitbucket.org/2.0/repositories/${repository.full_name}/src?pagelen=100`)
-            .then((response) => {
-                if (!response.ok){
-                    console.log(`Error: ${repository.name}`);
-                    return false;
+        fetch(`https://api.bitbucket.org/2.0/repositories/${repository.full_name}/src?pagelen=100`).then((response) => {
+            if (!response.ok){
+                console.log(`Error: ${repository.name}`);
+                repository.isBower = false;
+            }
+            return response.json();
+        }).then(data =>{
+            let _haveBowerFile = false;
+            data.values.map((file) => {
+                if(file.path === 'bower.json'){
+                    _haveBowerFile = true;
                 }
-                return response.json();
-            })
-            .then(data =>{
-                let _haveBowerFile = false;
-                data.values.map((file) => {
-                    if(file.path === 'bower.json'){
-                        _haveBowerFile = true;
-                    }
-                });
-                return _haveBowerFile;
-            }).catch((error) => {
-                console.log(error);
             });
+            repository.isBower = _haveBowerFile;
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     render() {
         const self = this;
+        let isFinished = false;
         const repositoriesElement = this.props.repositories.map(function(repository, i){
-            if(self.filterByBowerProjects(repository)){
-                return (<a href="#" className="list-group-item list-group-item-action" key={i}>{repository.name}</a>)
+            self.filterByBowerProjects(repository);
+            if(repository.isBower){
+                return (<a href="#" className="list-group-item list-group-item-action" key={i} style={{display: repository.isBower ? 'block' : 'none' }}>{repository.name}</a>);
+            }
+            if(self.props.repositories.length === i + 1){
+                isFinished = true;
             }
         });
         return (
+
             <div className="list-group">
                 {repositoriesElement}
             </div>
