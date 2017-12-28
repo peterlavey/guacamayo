@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import BowerList from "./BowerList";
 import BowerRepository from "./BowerRepository";
+import KEYS from "./constants/Constants";
 
 class Repositories extends Component {
     constructor(props) {
         super(props);
 
+        this.KEYS = KEYS;
         this.state = {
             userName: 'PedroCisternas',
             repositories: [],
@@ -19,7 +20,7 @@ class Repositories extends Component {
     }
 
     handleKeyPress(target, event) {
-        if(event.charCode==13){
+        if(event.charCode === this.KEYS.ENTER ){
             target.getRepositories(target.state.userName);
         }
     }
