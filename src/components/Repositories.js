@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BowerList from "./BowerList";
+import BowerRepository from "./BowerRepository";
 
 class Repositories extends Component {
     constructor(props) {
@@ -47,17 +48,18 @@ class Repositories extends Component {
         }
 
         const repositoriesElement = this.state.repositories.map(function(repository, i){
-            if(repository.isBower){
-                return (<a href="#" className="list-group-item list-group-item-action" key={i} style={{display: repository.isBower ? 'block' : 'none' }}>{repository.name}</a>);
-            }
+            return (
+                <BowerRepository key={repository.uuid} repository={repository}></BowerRepository>
+            );
         });
         return (
             <div>
                 <input className="form-control" type="text" placeholder="Type the name of your repository" value={this.state.userName} onChange={this.handleChange} onKeyPress={(e) => this.handleKeyPress(this, e)}/>
-                <BowerList repositories={this.state.repositories}></BowerList>
+
                 <h1 className="text-danger">{this.state.error.message}</h1>
-                <h2>test</h2>
-                {repositoriesElement}
+                <div className="list-group">
+                    {repositoriesElement}
+                </div>
             </div>
         );
     }
